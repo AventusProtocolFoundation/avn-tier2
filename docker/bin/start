@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# (Re)starts Docker containers.
+#
+DIR=$(dirname "$0")
+env_file="config/env.dev"
+
+(cd "$DIR/.." &&
+  docker-compose --env-file ${env_file} up --remove-orphans -d "$@" &&
+  sleep 5 &&
+  docker-compose --env-file ${env_file} ps)

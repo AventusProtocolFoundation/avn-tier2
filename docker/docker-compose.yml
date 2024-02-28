@@ -1,0 +1,166 @@
+version: '3.8'
+
+services:
+  validator-0:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      # Local node id: 12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp (Legacy: QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR)
+      - "--node-key"
+      - "0000000000000000000000000000000000000000000000000000000000000001"
+      - "--chain=/avn/chain_spec.json"
+      - "--keystore-path"
+      - "/avn-keystore/"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--validator"
+      - "--ethereum-node-url"
+      - "${ethereum_node_url:-http://172.17.0.1:8545/}"
+      - "--prometheus-external"
+    volumes:
+      - validator-0-data:/avn/node-data/
+      - validator-0-keystore:/avn-keystore/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+        aliases:
+          - bootstrap
+  validator-1:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      - "--node-key"
+      # Local node id: 12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD
+      - "0000000000000000000000000000000000000000000000000000000000000002"
+      - "--chain=/avn/chain_spec.json"
+      - "--bootnodes"
+      - "/dns/validator-0/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp"
+      - "/dns/validator-1/tcp/30333/p2p/12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD"
+      - "/dns/validator-2/tcp/30333/p2p/12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x"
+      - "--keystore-path"
+      - "/avn-keystore/"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--validator"
+      - "--ethereum-node-url"
+      - "${ethereum_node_url:-http://172.17.0.1:8545/}"
+      - "--prometheus-external"
+    volumes:
+      - validator-1-data:/avn/node-data/
+      - validator-1-keystore:/avn-keystore/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+  validator-2:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      - "--node-key"
+      # Local node id: 12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x
+      - "0000000000000000000000000000000000000000000000000000000000000003"
+      - "--chain=/avn/chain_spec.json"
+      - "--bootnodes"
+      - "/dns/validator-0/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp"
+      - "/dns/validator-1/tcp/30333/p2p/12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD"
+      - "/dns/validator-2/tcp/30333/p2p/12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x"
+      - "--keystore-path"
+      - "/avn-keystore/"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--validator"
+      - "--ethereum-node-url"
+      - "${ethereum_node_url:-http://172.17.0.1:8545/}"
+      - "--prometheus-external"
+    volumes:
+      - validator-2-data:/avn/node-data/
+      - validator-2-keystore:/avn-keystore/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+  validator-3:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      - "--node-key"
+      # Local node id: 12D3KooWSsChzF81YDUKpe9Uk5AHV5oqAaXAcWNSPYgoLauUk4st
+      - "0000000000000000000000000000000000000000000000000000000000000004"
+      - "--chain=/avn/chain_spec.json"
+      - "--bootnodes"
+      - "/dns/validator-0/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp"
+      - "/dns/validator-1/tcp/30333/p2p/12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD"
+      - "/dns/validator-2/tcp/30333/p2p/12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x"
+      - "--keystore-path"
+      - "/avn-keystore/"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--validator"
+      - "--ethereum-node-url"
+      - "${ethereum_node_url:-http://172.17.0.1:8545/}"
+      - "--prometheus-external"
+    volumes:
+      - validator-3-data:/avn/node-data/
+      - validator-3-keystore:/avn-keystore/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+  validator-4:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      - "--chain=/avn/chain_spec.json"
+      - "--bootnodes"
+      - "/dns/validator-1/tcp/30333/p2p/12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD"
+      - "/dns/validator-2/tcp/30333/p2p/12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x"
+      - "/dns/validator-3/tcp/30333/p2p/12D3KooWSsChzF81YDUKpe9Uk5AHV5oqAaXAcWNSPYgoLauUk4st"
+      - "--keystore-path"
+      - "/avn-keystore/"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--validator"
+      - "--ethereum-node-url"
+      - "${ethereum_node_url:-http://172.17.0.1:8545/}"
+      - "--prometheus-external"
+    volumes:
+      - validator-4-data:/avn/node-data/
+      - validator-4-keystore:/avn-keystore/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+  # Rpc-Node
+  avn-node-rpc:
+    image: 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${image_tag}
+    command:
+      - "--unsafe-ws-external"
+      - "--unsafe-rpc-external"
+      - "--chain=/avn/chain_spec.json"
+      - "--rpc-cors"
+      - "all"
+      - "--bootnodes"
+      - "/dns/validator-0/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp"
+      - "/dns/validator-1/tcp/30333/p2p/12D3KooWHdiAxVd8uMQR1hGWXccidmfCwLqcMpGwR6QcTP6QRMuD"
+      - "/dns/validator-2/tcp/30333/p2p/12D3KooWSCufgHzV4fCwRijfH2k3abrpAJxTKxEvN1FDuRXA2U9x"
+      - "--no-mdns"
+      - "--no-telemetry"
+      - "--pruning"
+      - "archive"
+      - "--prometheus-external"
+    ports:
+      - "${avn_port:-30333}:30333"
+      - "${avn_rpc_port:-9933}:9933"
+      - "${avn_ws_port:-9944}:9944"
+      - "${avn_prometheus_port:-9615}:9615"
+    volumes:
+      - rpc-node-data:/avn/node-data/
+      - ./avn-scripts-output/chainspecRaw.json:/avn/chain_spec.json
+    networks:
+      avn_peers:
+networks:
+  avn_peers:
+
+volumes:
+  validator-0-keystore:
+  validator-1-keystore:
+  validator-2-keystore:
+  validator-3-keystore:
+  validator-4-keystore:
+  rpc-node-data:
+  validator-0-data:
+  validator-1-data:
+  validator-2-data:
+  validator-3-data:
+  validator-4-data:

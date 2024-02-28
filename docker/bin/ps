@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Displays Docker container processes.
+#
+DIR=$(dirname "$0")
+
+(cd "$DIR/.." &&
+  docker-compose --env-file config/env.dev ps "$@")

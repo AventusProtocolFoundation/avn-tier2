@@ -1,0 +1,4 @@
+[submodule "substrate"]
+	path = substrate
+	url = git@github.com:ArtosSystems/substrate.git
+	branch = v3.0.0_avn

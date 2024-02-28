@@ -1,0 +1,322 @@
+{
+  "CheckResult": {
+    "_enum": [
+      "Ok",
+      "Invalid",
+      "HttpErrorCheckingEvent",
+      "Unknown"
+    ]
+  },
+  "ChallengeReason": {
+    "_enum": [
+      "IncorrectResult",
+      "IncorrectEventData",
+      "Unknown"
+    ]
+  },
+  "Challenge": {
+    "event_id": "EthEventId",
+    "challenge_reason": "ChallengeReason",
+    "challenged_by": "AccountId"
+  },
+  "SummaryChallenge": {
+    "challenge_reason": "SummaryChallengeReason",
+    "challenger": "AccountId",
+    "challengee": "AccountId"
+  },
+  "EthEvent": {
+    "event_id": "EthEventId",
+    "event_data": "EventData"
+  },
+  "EthEventId": {
+    "signature": "H256",
+    "transaction_hash": "H256"
+  },
+  "EthEventCheckResult": {
+    "event": "EthEvent",
+    "result": "CheckResult",
+    "checked_by": "AccountId",
+    "checked_at_block": "BlockNumber",
+    "ready_for_processing_after_block": "BlockNumber",
+    "min_challenge_votes": "u32"
+  },
+  "EventData": {
+    "_enum": {
+      "LogAddedValidator": "AddedValidatorData",
+      "LogLifted": "LiftedData",
+      "EmptyEvent": "{}",
+      "LogNftMinted": "NftMintData",
+      "LogNftTransferTo": "NftTransferToData",
+      "LogNftCancelListing": "NftCancelListingData",
+      "LogNftEndBatchListing": "NftEndBatchListingData"
+    }
+  },
+  "AddedValidatorData": {
+    "eth_public_key": "H512",
+    "t2_address": "H256",
+    "validator_account_id": "U256"
+  },
+  "LiftedData": {
+    "token_contract": "H160",
+    "sender_address": "H160",
+    "receiver_address": "H256",
+    "amount": "u128",
+    "nonce": "U256"
+  },
+  "NftMintData": {
+    "batch_id": "U256",
+    "t2_owner_public_key": "H256",
+    "op_id": "u64",
+    "t1_contract_issuer": "H160",
+    "sale_index": "u64",
+    "unique_external_ref": "Vec<u8>"
+  },
+  "NftTransferToData": {
+    "nft_id": "U256",
+    "t2_transfer_to_public_key": "H256",
+    "transfer_nonce": "u64"
+  },
+  "NftCancelListingData": {
+    "nft_id": "U256",
+    "op_id": "u64"
+  },
+  "NftEndBatchListingData": {
+    "batch_id": "U256"
+  },
+  "ValidEvents": {
+    "_enum": [
+      "AddedValidator",
+      "Lifted",
+      "NftMint",
+      "NftTransferTo",
+      "NftCancelListing",
+      "NftEndBatchListing"
+    ]
+  },
+  "Keys": "SessionKeys5",
+  "TxHash": "H256",
+  "RecipientAccountId": "AccountId",
+  "EthTxHash": "H256",
+  "AmountLifted": "u128",
+  "TokenId": "H160",
+  "TokenBalance": "u128",
+  "AmountLowered": "u128",
+  "T1Recipient": "H160",
+  "SenderAccountId": "AccountId",
+  "Relayer": "AccountId",
+  "Hash": "H256",
+  "MultiSignature": {
+    "_enum": {
+      "Ed25519": "[u8; 64]",
+      "Sr25519": "[u8; 64]",
+      "Ecdsa": "[u8; 64]"
+    }
+  },
+  "Proof": {
+    "signer": "AccountId",
+    "relayer": "AccountId",
+    "signature": "MultiSignature"
+  },
+  "PaymentInfo": {
+    "payer": "AccountId",
+    "recipient": "AccountId",
+    "amount": "Balance",
+    "signature": "MultiSignature"
+  },
+  "EthTransactionType": {
+    "_enum": {
+      "PublishRoot": "PublishRootData",
+      "DeregisterValidator": "DeregisterValidatorData",
+      "SlashValidator": "SlashValidatorData",
+      "ActivateValidator": "ActivateValidatorData",
+      "Invalid": "{}",
+      "Discarded": "TransactionId"
+    }
+  },
+  "PublishRootData": {
+    "root_hash": "[u8;32]"
+  },
+  "DeregisterValidatorData": {
+    "t2_public_key": "[u8;32]"
+  },
+  "SlashValidatorData": {
+    "t2_public_key": "[u8;32]"
+  },
+  "ActivateValidatorData": {
+    "t2_public_key": "[u8;32]"
+  },
+  "EthTransactionCandidate": {
+    "tx_id": "TransactionId",
+    "from": "Option<[u8;32]>",
+    "call_data": "EthTransactionType",
+    "signatures": "EthSignatures",
+    "quorum": "u32",
+    "eth_tx_hash": "EthereumTransactionHash"
+  },
+  "EthSignatures": {
+    "signatures_list": "Vec<[u8;65]>"
+  },
+  "EcdsaSignature": {
+    "r": "[u8;32]",
+    "s": "[u8;32]",
+    "v": "[u8;1]"
+  },
+  "EthTransaction": {
+    "from": "[u8;32]",
+    "to": "H160",
+    "value": "U256",
+    "data": "Vec<u8>"
+  },
+  "TransactionId": "u64",
+  "EthereumTransactionHash": "H256",
+  "Authority": {
+    "account_id": "AccountId",
+    "local_key": "AuthorityId"
+  },
+  "RootData": {
+    "root_hash": "H256",
+    "added_by": "AccountId",
+    "is_validated": "bool",
+    "is_finalised": "bool",
+    "tx_id": "Option<TransactionId>"
+  },
+  "RootRange": {
+    "from_block": "BlockNumber",
+    "to_block": "BlockNumber"
+  },
+  "RootId": {
+    "range": "RootRange",
+    "ingress_counter": "IngressCounter"
+  },
+  "VotingSessionData": {
+    "voting_session_id": "Vec<u8>",
+    "threshold": "u32",
+    "ayes": "Vec<AccountId>",
+    "nays": "Vec<AccountId>",
+    "end_of_voting_period": "BlockNumber",
+    "confirmations": "Vec<[u8;65]>",
+    "created_at_block": "BlockNumber"
+  },
+  "Validator": {
+    "account_id": "AccountId",
+    "key": "AuthorityId"
+  },
+  "ActionId": {
+    "account_id": "AccountId",
+    "ingress_counter": "IngressCounter"
+  },
+  "ValidatorsActionStatus": {
+    "_enum": [
+      "AwaitingConfirmation",
+      "Confirmed",
+      "Actioned",
+      "None"
+    ]
+  },
+  "ValidatorsActionData": {
+    "status": "ValidatorsActionStatus",
+    "primary_validator": "AccountId",
+    "eth_transaction_id": "TransactionId",
+    "action_type": "ValidatorsActionType",
+    "reserved_eth_transaction": "EthTransactionType"
+  },
+  "Public": "[u8;33]",
+  "ValidatorsActionType": {
+    "_enum": [
+      "Voluntary",
+      "Slashed",
+      "Activation",
+      "Unknown"
+    ]
+  },
+  "EthereumLogOffenceType": {
+    "_enum": [
+      "IncorrectValidationResultSubmitted",
+      "ChallengeAttemptedOnValidResult"
+    ]
+  },
+  "InvalidEthereumLogOffence": {
+    "session_index": "u32",
+    "validator_set_count": "u32",
+    "offenders": "Vec<AccountId>",
+    "offence_type": "EthereumLogOffenceType"
+  },
+  "SummaryOffenceType": {
+    "_enum": [
+      "InvalidSignatureSubmitted",
+      "InvalidVoteSubmitted",
+      "SlotNotAdvanced",
+      "NoSummaryCreated",
+      "RejectedValidRoot",
+      "CreatedInvalidRoot",
+      "ApprovedInvalidRoot"
+    ]
+  },
+  "ValidatorOffenceType" : {
+    "_enum": [
+    "InvalidSignatureSubmitted",
+    "RejectedValidAction",
+    "ApprovedInvalidAction"
+    ]
+  },
+  "SummaryChallengeReason": {
+    "_enum": {
+      "SlotNotAdvanced": "u32",
+      "Unknown": "{}"
+    }
+  },
+  "IngressCounter": "u64",
+  "SubmissionData": {
+    "finalised_block": "BlockNumber",
+    "submitted_at_block": "BlockNumber"
+  },
+  "DispatchedData": {
+    "transaction_id": "TransactionId",
+    "submitted_at_block": "BlockNumber"
+  },
+  "NftId": "U256",
+  "NftInfoId": "U256",
+  "NftBatchId": "U256",
+  "Nft": {
+    "nft_id": "NftId",
+    "info_id": "NftInfoId",
+    "unique_external_ref": "Vec<u8>",
+    "nonce": "u64",
+    "owner": "AccountId",
+    "is_locked": "bool"
+  },
+  "NftInfo": {
+    "info_id": "NftInfoId",
+    "batch_id": "Option<NftBatchId>",
+    "royalties": "Vec<Royalty>",
+    "total_supply": "u64",
+    "t1_authority": "H160",
+    "creator": "Option<AccountId>"
+  },
+  "RoyaltyRate": {
+    "parts_per_million": "u32"
+  },
+  "Royalty": {
+    "recipient_t1_address": "H160",
+    "rate": "RoyaltyRate"
+  },
+  "NftSaleType": {
+    "_enum": [
+      "Unknown",
+      "Ethereum",
+      "Fiat"
+    ]
+  },
+  "MinterTier1Address": "H160",
+  "OpId": "u64",
+  "TotalSupply": "u64",
+  "EthereumContracts": {
+    "_enum": {
+      "ValidatorsManager": "{}",
+      "Lifting": "{}",
+      "NftMarketplace": "{}"
+    }
+  },
+  "Address": "MultiAddress",
+  "LookupSource": "MultiAddress"
+}

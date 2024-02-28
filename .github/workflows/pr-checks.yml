@@ -1,0 +1,77 @@
+name: PR-checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - master
+      - 'release-v*'
+      - 'hotfix/*'
+  workflow_dispatch:
+
+jobs:
+  sanity-check:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rust & wasm installation
+        run: scripts/install_prerequisites.sh
+      - name: Tools versions
+        run: cargo --version && rustup --version && rustc --version
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-sanity
+      # TODO: Remove this when its properly fixed
+      - name: Cleanup of some incremental build files that conflict
+        run: cargo clean -p node-cli -p node-runtime
+      - name: Run sanity tests
+        run: scripts/sanity_checker.sh
+  benchmark-check:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rust & wasm installation
+        run: scripts/install_prerequisites.sh
+      - name: Tools versions
+        run: cargo --version && rustup --version && rustc --version
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-bench
+      # TODO: Remove this when its properly fixed
+      - name: Cleanup of some incremental build files that conflict
+        run: cargo clean -p node-cli -p node-runtime
+      - name: Run sanity tests
+        run: scripts/sanity_checker.sh bench
+  cargo-check:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rust & wasm installation
+        run: scripts/install_prerequisites.sh
+      - name: Tools versions
+        run: cargo --version && rustup --version && rustc --version
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-check
+      # TODO: Remove this when its properly fixed
+      - name: Cleanup of some incremental build files that conflict
+        run: cargo clean -p node-cli -p node-runtime
+      - name: Run cargo check
+        run: cargo check
+      - name: Check that lock file has not changed
+        run: git diff --exit-code Cargo.lock

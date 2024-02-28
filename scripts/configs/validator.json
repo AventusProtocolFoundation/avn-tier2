@@ -1,0 +1,11 @@
+{
+	"base_path": "/tmp/validators",
+	"source": "substrate",
+	"build": "release",
+	"port": "30333",
+	"ws_port": "9944",
+	"rpc_port": "9933",
+	"avn_port": "2020",
+	"telemetry_url": "ws://telemetry.polkadot.io:1024",
+	"prometheus_port": "9615"
+}

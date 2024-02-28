@@ -1,0 +1,13 @@
+{
+    "processed_events": [
+        {
+            "signature": "0xff083a6e395a67771f3c9108922bc274c27b38b48c210b0f6a8c5f4710c0494b",
+            "tx_hash": ""
+        }
+    ],
+    "initial_lift_events": [
+        {
+            "tx_hash": ""
+        }
+    ]
+}

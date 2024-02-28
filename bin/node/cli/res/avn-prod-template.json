@@ -1,0 +1,158 @@
+{
+    "name": "AvN Mainnet",
+    "id": "avn_mainnet",
+    "chainType": "Live",
+    "bootNodes": [],
+    "telemetryEndpoints": [],
+    "protocolId": null,
+    "properties": {
+      "ss58Format": 65,
+      "tokenDecimals": 18,
+      "tokenSymbol": "AVT"
+    },
+    "forkBlocks": null,
+    "badBlocks": null,
+    "consensusEngine": null,
+    "lightSyncState": null,
+    "genesis": {
+      "runtime": {
+        "frameSystem": {
+          "changesTrieConfig": null,
+          "code": "<FILL ME>"
+        },
+        "palletBabe": {
+          "authorities": []
+        },
+        "palletIndices": {
+          "indices": []
+        },
+        "palletBalances": {
+          "balances": []
+        },
+        "palletStaking": {
+          "historyDepth": 0,
+          "validatorCount": 0,
+          "minimumValidatorCount": 0,
+          "invulnerables": [],
+          "forceEra": "NotForcing",
+          "slashRewardFraction": 100000000,
+          "canceledPayout": 0,
+          "stakers": []
+        },
+        "palletValidatorsManager": {
+          "validators": [
+            [
+              "<SR SS58 ADDRESS>",
+              "<COMPRESSED ETHEREUM PUBLIC KEY CONVERTED TO SS58 ADDRESS>"
+            ]
+          ]
+        },
+        "palletEthereumEvents": {
+          "validatorManagerContractAddress": "<ETH CONTRACT ADDRESS>",
+          "liftingContractAddress": "<ETH CONTRACT ADDRESS>",
+          "processedEvents": [
+            [
+              {
+                "signature": "<ETH FUNCTION SIGNATURE: must be a value from `ValidEvents` primitives/avn-common/src/event_types.rs>",
+                "transaction_hash": "<ETH TRANSACTION HASH>"
+              },
+              true
+            ]
+          ],
+          "quorumFactor": 3,
+          "eventChallengePeriod": 2400,
+          "liftTxHashes": [
+            "<ETH TRANSACTION HASH>"
+          ]
+        },
+        "palletEthereumTransactions": {
+          "getPublishRootContract": "<ETH CONTRACT ADDRESS>"
+        },
+        "palletSession": {
+          "keys": [
+            [
+              "<SR SS58 ADDRESS: Must be the same as palletValidatorsManager.validators address>",
+              "<SR SS58 ADDRESS: same as above>",
+              {
+                "grandpa": "<ED SS58 ADDRESS>",
+                "babe": "<SR SS58 ADDRESS: Must be unique and should not be used anywhere else in this file>",
+                "im_online": "<SR SS58 ADDRESS: Must be unique and should not be used anywhere else in this file>",
+                "authority_discovery": "<SR SS58 ADDRESS: Must be unique and should not be used anywhere else in this file>",
+                "avn": "<SR SS58 ADDRESS: Must be unique and should not be used anywhere else in this file>",
+              }
+            ]
+          ]
+        },
+        "palletDemocracy": {},
+        "palletCollectiveInstance1": {
+          "phantom": null,
+          "members": []
+        },
+        "palletCollectiveInstance2": {
+          "phantom": null,
+          "members": []
+        },
+        "palletElectionsPhragmen": {
+          "members": []
+        },
+        "palletMembershipInstance1": {
+          "members": [],
+          "phantom": null
+        },
+        "palletGrandpa": {
+          "authorities": []
+        },
+        "palletTreasury": {},
+        "palletContracts": {
+          "currentSchedule": {
+            "version": 0,
+            "put_code_per_byte_cost": 500000,
+            "grow_mem_cost": 500000,
+            "regular_op_cost": 500000,
+            "return_data_per_byte_cost": 500000,
+            "event_data_per_byte_cost": 500000,
+            "event_per_topic_cost": 500000,
+            "event_base_cost": 500000,
+            "call_base_cost": 67500000,
+            "instantiate_base_cost": 87500000,
+            "dispatch_base_cost": 67500000,
+            "sandbox_data_read_cost": 500000,
+            "sandbox_data_write_cost": 500000,
+            "transfer_cost": 50000000,
+            "instantiate_cost": 100000000,
+            "max_event_topics": 4,
+            "max_stack_height": 65536,
+            "max_memory_pages": 16,
+            "max_table_size": 16384,
+            "enable_println": false,
+            "max_subject_len": 32,
+            "max_code_size": 524288
+          }
+        },
+        "palletSudo": {
+          "key": "<SR SS58 ADDRESS: Must be unique and should not be used anywhere else in this file>"
+        },
+        "palletImOnline": {
+          "keys": []
+        },
+        "palletAuthorityDiscovery": {
+          "keys": []
+        },
+        "palletSociety": {
+          "pot": 0,
+          "maxMembers": 999,
+          "members": []
+        },
+        "palletVesting": {
+          "vesting": []
+        },
+        "palletTokenManager": {
+          "lowerAccountId": "0x000000000000000000000000000000000000000000000000000000000000dead"
+        },
+        "palletSummary": {
+          "schedulePeriod": 28800,
+          "votingPeriod": 600
+        }
+      }
+    }
+  }

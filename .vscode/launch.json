@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'avn-node'",
+      "cargo": {
+          "args": [
+          "build",
+          "--bin=avn-node",
+          ],
+          "filter": {
+          "name": "avn-node",
+          "kind": "bin"
+          }
+      },
+      "args": [
+        "--dev",
+        "--ethereum-node-url",
+        "http://localhost:8545",
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

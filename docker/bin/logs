@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Monitors Docker container logs in real time.
+#
+DIR=$(dirname "$0")
+
+(cd "$DIR/.." &&
+  docker-compose --env-file config/env.dev logs --tail 1024 -f "$@" )

@@ -1,0 +1,4 @@
+- name: 'AvN_Dashboards'
+  type: 'file'
+  options:
+    folder: '/avn/dashboards'

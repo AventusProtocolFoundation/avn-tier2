@@ -1,0 +1,57 @@
+[package]
+name = "node-testing"
+version = "2.0.0"
+authors = ["Parity Technologies <admin@parity.io>"]
+description = "Test utilities for Substrate node."
+edition = "2018"
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+homepage = "https://substrate.dev"
+repository = "https://github.com/paritytech/substrate/"
+publish = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+pallet-balances = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sc-service = { version = "0.9.0", features = ["test-helpers", "db"],  git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sc-client-db = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", features = ["kvdb-rocksdb", "parity-db"] }
+sc-client-api = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+codec = { package = "parity-scale-codec", version = "2.0.0" }
+pallet-contracts = { version = "2.0.1", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-grandpa = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-indices = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-keyring = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+node-executor = { version = "2.0.0", path = "../executor" }
+node-primitives = { version = "2.0.0", git = 'https://github.com/Aventus-Network-Services/substrate', branch = "v3.0.0_avn" }
+node-runtime = { version = "2.0.0", path = "../runtime" }
+sp-core = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-io = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-support = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-session = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-society = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-runtime = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-staking = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sc-executor = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", features = ["wasmtime"] }
+sp-consensus = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-system = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+substrate-test-client = { version = "2.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-timestamp = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-transaction-payment = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-treasury = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-api = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-timestamp = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-block-builder = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sc-block-builder = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-inherents = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-blockchain = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+wabt = "0.10.0"
+log = "0.4.8"
+tempfile = "3.1.0"
+fs_extra = "1"
+futures = "0.3.1"
+hex-literal = "0.2.1"
+
+[dev-dependencies]
+criterion = "0.3.0"
+sc-cli = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }

@@ -1,0 +1,55 @@
+[package]
+name = "pallet-token-manager"
+version = "0.7.0"
+authors = ["Aventus Network Services Team"]
+edition = "2018"
+license = "GPL-3.0"
+homepage = "http://www.aventus.io/"
+repository = "https://github.com/Aventus-Network-Services/avn-tier2/"
+
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false }
+enumflags2 = { version = "0.6.2" }
+pallet-ethereum-events = { version = "0.7.0", default-features = false, path = "../ethereum-events" }
+pallet-avn = { version = "0.7.0", default-features = false, path = "../avn" }
+hex-literal = { version = "0.2.1", default-features = false }
+sp-avn-common = { version = "0.7.0", default-features = false, path = "../../primitives/avn-common" }
+sp-core = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-std = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-runtime = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-support = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-system = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+
+# Optional imports for benchmarking
+serde = { version = "1.0.101", optional = true }
+frame-benchmarking = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", optional = true }
+
+[dev-dependencies]
+sp-io = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+substrate-test-utils = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-balances = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-transaction-payment = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-keystore = { version = "0.9.0", git = "https://github.com/Aventus-Network-Services/substrate", branch = "v3.0.0_avn" }
+
+[features]
+default = ["std"]
+std = [
+	"serde",
+	"codec/std",
+	"sp-std/std",
+	"sp-runtime/std",
+	"frame-support/std",
+	"frame-system/std",
+	"pallet-ethereum-events/std",
+	"sp-avn-common/std",
+	"pallet-avn/std",
+]
+runtime-benchmarks = [
+	"frame-benchmarking",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+]

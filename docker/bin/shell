@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Enters Docker container's shell (always as root user, regardless of container user). Arguments:
+# $1 - container name
+# $2 - optional Shell, e.g. 'ash'; default is 'bash'
+#
+DIR=$(dirname "$0")
+CONTAINER=${1?Missing container name}
+SHELL=${2:-bash}
+
+(cd "$DIR/.." &&
+  docker-compose --env-file config/env.dev exec --user root "$CONTAINER" "$SHELL")

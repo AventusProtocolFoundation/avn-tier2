@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  alertmanager:
+    image: prom/alertmanager
+    networks:
+      - avn_peers
+    ports:
+      - "9093:9093"
+    depends_on:
+      - prometheus
+    volumes:
+      - ./alerts/alert-manager-config.yaml:/etc/alertmanager/alertmanager.yml
+
+  prometheus:
+    image: prom/prometheus
+    networks:
+      - avn_peers
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alerts/alerting-rules.yaml:/alertmanager/alert.rules
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - avn_peers
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - "./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:rw"
+      - "./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:rw"
+      - "./grafana/dashboards:/avn/dashboards:rw"
+    restart: always
+
+networks:
+  avn_peers:
+    external: true
+    name: avn_dev_avn_peers
+
+volumes:
+  grafana-data:

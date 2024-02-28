@@ -1,0 +1,41 @@
+[package]
+name = "sp-avn-common"
+version = "0.7.0"
+authors = ["Aventus Network Services Team"]
+edition = "2018"
+license = "GPL-3.0"
+homepage = "http://www.aventus.io/"
+repository = "https://github.com/Aventus-Network-Services/avn-tier2/"
+description = "Common types for avn pallets"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+derive_more = "0.99.2"
+hex = { version = "0.4", default-features = false }
+hex-literal = { version = "0.2.1", default-features = false }
+impl-trait-for-tuples = "0.1.3"
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = ["derive"] }
+sp-core = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-std = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-runtime = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-io = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+serde = { version = "1.0.101", optional = true, features = ["derive"] }
+log = { version = "0.4.8", optional = true, features = ["std"] }
+
+[dev-dependencies]
+byte-slice-cast = "0.3.5"
+sha3 = {version = "0.8.2"}
+
+[features]
+default = [ "std" ]
+std = [
+	"serde",
+	"codec/std",
+	"sp-core/std",
+	"sp-std/std",
+	"sp-io/std",
+	"sp-runtime/std",
+	"log",
+]

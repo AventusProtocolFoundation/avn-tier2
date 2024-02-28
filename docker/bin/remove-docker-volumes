@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# REMOVES ALL DOCKER VOLUMES for this project.
+#
+
+DIR=$(dirname "$0")
+ANSWER="n"
+TIMEOUT_SEC=30
+
+read -t "$TIMEOUT_SEC" -er -i "$ANSWER" -p "Really remove all Docker volumes for this project? [y/N] " ANSWER
+echo
+
+if [ "$ANSWER" = "y" -o "$ANSWER" = "Y" ]; then
+  (cd "$DIR/.." && docker-compose --env-file config/env.dev down -v)
+else
+  echo "The answer was not positive, doing nothing"
+fi

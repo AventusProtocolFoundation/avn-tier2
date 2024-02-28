@@ -1,0 +1,218 @@
+[package]
+name = "node-runtime"
+version = "2.0.1"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+build = "build.rs"
+license = "Apache-2.0"
+homepage = "https://substrate.dev"
+repository = "https://github.com/paritytech/substrate/"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+
+# third-party dependencies
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = ["derive"] }
+serde = { version = "1.0.102", optional = true }
+static_assertions = "1.1.0"
+hex-literal = { version = "0.3.1", optional = true }
+
+# keep as is
+sp-avn-common = { version = "0.7.0", default-features = false, path = "../../../primitives/avn-common" }
+pallet-validators-manager = { version = "0.7.0", default-features = false, path = "../../../frame/validators-manager" }
+pallet-ethereum-events = { version = "0.7.0", default-features = false, path = "../../../frame/ethereum-events" }
+pallet-ethereum-transactions = { version = "0.7.0", default-features = false, path = "../../../frame/ethereum-transactions" }
+pallet-token-manager = { version = "0.7.0", default-features = false, path = "../../../frame/token-manager" }
+pallet-nft-manager = { version = "0.7.0", default-features = false, path = "../../../frame/nft-manager" }
+pallet-avn = { version = "0.7.0", default-features = false, path = "../../../frame/avn" }
+pallet-avn-offence-handler = { version = "0.7.0", default-features = false, path = "../../../frame/avn-offence-handler" }
+pallet-summary = { version = "0.7.0", default-features = false, path = "../../../frame/summary" }
+pallet-avn-finality-tracker = { version = "0.7.0", default-features = false, path = "../../../frame/avn-finality-tracker" }
+pallet-avn-proxy = { version = "0.7.0", default-features = false, path = "../../../frame/avn-proxy" }
+
+# primitives
+sp-authority-discovery = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-consensus-babe = { version = "0.9.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-block-builder = { git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", default-features = false, version = "3.0.0"}
+sp-inherents = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+node-primitives = { version = "2.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-offchain = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-core = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-std = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-api = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-runtime = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-staking = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-keyring = { version = "3.0.0", optional = true, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-session = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-transaction-pool = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+sp-version = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+
+# frame dependencies
+frame-executive = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-benchmarking = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", optional = true }
+frame-support = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-system = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+frame-system-benchmarking = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", optional = true }
+frame-system-rpc-runtime-api = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-assets = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-authority-discovery = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-authorship = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-babe = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-balances = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-bounties = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-collective = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-contracts = { version = "2.0.1", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-contracts-primitives = { version = "2.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-contracts-rpc-runtime-api = { version = "0.8.0", default-features = false,git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-democracy = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-elections-phragmen = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-grandpa = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-im-online = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-indices = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-identity = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-lottery = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-membership = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-mmr = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-multisig = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-offences = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-offences-benchmarking = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", default-features = false, optional = true }
+pallet-proxy = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-randomness-collective-flip = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-recovery = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-session = { version = "3.0.0", features = ["historical"], git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", default-features = false }
+pallet-session-benchmarking = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn", default-features = false, optional = true }
+pallet-staking = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-staking-reward-curve = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-scheduler = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-society = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-sudo = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-timestamp = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-tips = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-treasury = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-utility = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-transaction-payment = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-transaction-payment-rpc-runtime-api = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+pallet-vesting = { version = "3.0.0", default-features = false, git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+
+[build-dependencies]
+substrate-wasm-builder = { version = "4.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+
+[dev-dependencies]
+sp-io = { version = "3.0.0", git = "https://github.com/Aventus-Network-Services/substrate.git", branch = "v3.0.0_avn" }
+
+[features]
+default = ["std"]
+with-tracing = [ "frame-executive/with-tracing" ]
+std = [
+	"sp-authority-discovery/std",
+	"pallet-assets/std",
+	"pallet-authority-discovery/std",
+	"pallet-authorship/std",
+	"sp-consensus-babe/std",
+	"pallet-babe/std",
+	"pallet-balances/std",
+	"pallet-bounties/std",
+	"sp-block-builder/std",
+	"codec/std",
+	"pallet-collective/std",
+	"pallet-contracts/std",
+	"pallet-contracts-primitives/std",
+	"pallet-contracts-rpc-runtime-api/std",
+	"pallet-democracy/std",
+	"pallet-elections-phragmen/std",
+	"frame-executive/std",
+	"pallet-grandpa/std",
+	"pallet-im-online/std",
+	"pallet-indices/std",
+	"sp-inherents/std",
+	"pallet-lottery/std",
+	"pallet-membership/std",
+	"pallet-mmr/std",
+	"pallet-multisig/std",
+	"pallet-identity/std",
+	"pallet-scheduler/std",
+	"node-primitives/std",
+	"sp-offchain/std",
+	"pallet-offences/std",
+	"pallet-proxy/std",
+	"sp-core/std",
+	"pallet-randomness-collective-flip/std",
+	"sp-std/std",
+	"serde",
+	"pallet-session/std",
+	"sp-api/std",
+	"sp-runtime/std",
+	"sp-staking/std",
+	"pallet-staking/std",
+	"sp-keyring",
+	"sp-session/std",
+	"pallet-sudo/std",
+	"frame-support/std",
+	"frame-benchmarking/std",
+	"frame-system-rpc-runtime-api/std",
+	"frame-system/std",
+	"pallet-timestamp/std",
+	"pallet-tips/std",
+	"pallet-transaction-payment-rpc-runtime-api/std",
+	"pallet-transaction-payment/std",
+	"pallet-treasury/std",
+	"sp-transaction-pool/std",
+	"pallet-utility/std",
+	"sp-version/std",
+	"pallet-society/std",
+	"pallet-recovery/std",
+	"pallet-vesting/std",
+	"pallet-validators-manager/std",
+	"pallet-token-manager/std",
+	"pallet-nft-manager/std",
+	"pallet-avn/std",
+	"pallet-avn-offence-handler/std",
+	"pallet-avn-finality-tracker/std",
+	"pallet-summary/std",
+	"pallet-avn-proxy/std"
+]
+runtime-benchmarks = [
+	"frame-benchmarking",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+	"sp-runtime/runtime-benchmarks",
+	"pallet-assets/runtime-benchmarks",
+	"pallet-avn-finality-tracker/runtime-benchmarks",
+	"pallet-babe/runtime-benchmarks",
+	"pallet-balances/runtime-benchmarks",
+	"pallet-bounties/runtime-benchmarks",
+	"pallet-collective/runtime-benchmarks",
+	"pallet-contracts/runtime-benchmarks",
+	"pallet-democracy/runtime-benchmarks",
+	"pallet-elections-phragmen/runtime-benchmarks",
+	"pallet-grandpa/runtime-benchmarks",
+	"pallet-identity/runtime-benchmarks",
+	"pallet-im-online/runtime-benchmarks",
+	"pallet-indices/runtime-benchmarks",
+	"pallet-lottery/runtime-benchmarks",
+	"pallet-mmr/runtime-benchmarks",
+	"pallet-multisig/runtime-benchmarks",
+	"pallet-proxy/runtime-benchmarks",
+	"pallet-scheduler/runtime-benchmarks",
+	"pallet-society/runtime-benchmarks",
+	"pallet-staking/runtime-benchmarks",
+	"pallet-summary/runtime-benchmarks",
+	"pallet-timestamp/runtime-benchmarks",
+	"pallet-tips/runtime-benchmarks",
+	"pallet-treasury/runtime-benchmarks",
+	"pallet-utility/runtime-benchmarks",
+	"pallet-vesting/runtime-benchmarks",
+	"pallet-ethereum-events/runtime-benchmarks",
+	"pallet-ethereum-transactions/runtime-benchmarks",
+	"pallet-validators-manager/runtime-benchmarks",
+	"pallet-avn-offence-handler/runtime-benchmarks",
+	"pallet-offences-benchmarking",
+	"pallet-session-benchmarking",
+	"pallet-token-manager/runtime-benchmarks",
+	"pallet-nft-manager/runtime-benchmarks",
+	"pallet-avn-proxy/runtime-benchmarks",
+	"frame-system-benchmarking",
+	"hex-literal",
+]

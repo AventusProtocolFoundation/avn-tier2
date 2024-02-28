@@ -1,0 +1,2 @@
+# This rule is preventing all the files from being added to releases archives.
+* export-ignore

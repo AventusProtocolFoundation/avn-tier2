@@ -1,0 +1,20 @@
+{
+    "processed_events" : [
+        {
+            "signature": "0xff083a6e395a67771f3c9108922bc274c27b38b48c210b0f6a8c5f4710c0494b",
+            "tx_hash": "0x1330dc4c0941e86620a88c64ef2d2025baa8695be9bd0991f69bd05bc579cbc5"
+        },
+        {
+            "signature": "0xff083a6e395a67771f3c9108922bc274c27b38b48c210b0f6a8c5f4710c0494b",
+            "tx_hash": "0xeb056d80e5acaad145129c9c535341d3f6e49ceb8bc8eae6a1f588b3f07e84a3"
+        },
+        {
+            "signature": "0x53dbd0621188344e69521ce5392debdff038d57d0ebd39536df06b20d9142bc0",
+            "tx_hash": "0xd2239bf6fc743fd7a6b7ffefe4a646791c06f61c82a67e0a0343eaf249d085eb"
+        }
+    ],
+    "initial_lift_events" : [
+        {"tx_hash": "0xb52dd196c020a5f3a96cc959408663462baaa311f776ae203c7871cdc2a2f9ce"},
+        {"tx_hash": "0x73deb51055685650b6bf2058094f18edc2cc2b674454d9d36c788def9b0f7164"}
+    ]
+}

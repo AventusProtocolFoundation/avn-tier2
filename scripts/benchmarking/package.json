@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@polkadot/api": "^3.0.1",
+    "@polkadot/keyring": "^5.0.1",
+    "@polkadot/types": "^3.0.1",
+    "web3-utils": "^1.4.0"
+  }
+}

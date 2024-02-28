@@ -1,0 +1,9 @@
+{
+	"base_path": "/tmp/",
+	"chain": "./specs/start-defaultSpecRaw.json",
+	"port": "30334",
+	"ws_port": "9945",
+	"rpc_port": "9934",
+	"telemetry_url": "ws://telemetry.polkadot.io:1024",
+	"grafana_port": "9956"
+}

@@ -1,0 +1,9 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "editor.rulers": [
+        0,
+        128
+    ],
+    "editor.tabSize": 4,
+    "git.autofetch": true,
+}

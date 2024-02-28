@@ -1,0 +1,2 @@
+monitoring/prometheus/prometheus.yml
+monitoring/alerts/alert-manager-config.yaml

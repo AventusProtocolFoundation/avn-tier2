@@ -1,0 +1,221 @@
+name: avn-node build & release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Push events to matching v*.*.*, i.e. v1.0.0, v20.15.10
+    branches:
+      - master
+      - 'release-v*'
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rust & wasm installation
+        run: |
+          scripts/install_prerequisites.sh
+          cargo --version && rustup --version && rustc --version
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-sanity
+      # TODO: Remove this when its properly fixed
+      - name: Cleanup of some incremental build files that conflict
+        run: cargo clean -p node-cli -p node-runtime
+      # TODO Make sanity checker build and run with --release flag & use dedicated cache file.
+      - name: Run tests
+        run: scripts/sanity_checker.sh
+
+  release-build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rust & wasm installation
+        run: |
+          scripts/install_prerequisites.sh
+          cargo --version && rustup --version && rustc --version
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-release-build-${{ hashFiles('**/Cargo.lock') }}
+      # TODO: Remove this when its properly fixed
+      - name: Cleanup of some incremental build files that conflict
+        run: cargo clean --release -p node-cli -p node-runtime
+      - name: Build
+        run: cargo build --release --verbose
+      - name: Avn-node Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: avn-node
+          path: target/release/avn-node
+          if-no-files-found: error
+      - name: Subkey Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: subkey
+          path: target/release/subkey
+          if-no-files-found: error
+      - name: Wasm node runtime Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: node_runtime.compact.wasm
+          path: target/release/wbuild/node-runtime/node_runtime.compact.wasm
+          if-no-files-found: error
+
+  release:
+    runs-on: ubuntu-20.04
+    needs: [run-tests, release-build]
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: get avn-node artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: avn-node
+          path: binaries/
+      - name: get subkey artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: subkey
+          path: binaries/
+      - name: get wasm runtime artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node_runtime.compact.wasm
+          path: binaries/
+
+      - name: export sha256sum
+        id: sha256
+        run: |
+          echo "::set-output name=node_sha::$(sha256sum -z binaries/avn-node | awk '{print $1}')"
+          echo "::set-output name=subkey_sha::$(sha256sum -z binaries/subkey | awk '{print $1}')"
+          echo "::set-output name=wasm_sha::$(sha256sum -z binaries/node_runtime.compact.wasm | awk '{print $1}')"
+
+      - name: Create a Release
+        id: create_avn_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: AvN node ${{ github.ref }}
+          body: |
+            # Release Notes
+            This release contains the latest version of AvN binaries.
+            ## sha256sum
+            avn-node: `${{ steps.sha256.outputs.node_sha }}`
+            subkey: `${{ steps.sha256.outputs.subkey_sha }}`
+            node_runtime.compact.wasm: `${{ steps.sha256.outputs.wasm_sha }}`
+
+          draft: true
+          # TODO: Use a public repository for releases
+          # Repository on which to release.  Used only if you want to create the release on another repo
+          # repo: # optional
+      - name: Upload Release Asset - avn-node
+        id: upload-avn-node
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_avn_release.outputs.upload_url }}
+          asset_path: binaries/avn-node
+          asset_name: avn-node
+          asset_content_type: application/zip
+      - name: Upload Release Asset - subkey
+        id: upload-subkey
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_avn_release.outputs.upload_url }}
+          asset_path: binaries/subkey
+          asset_name: subkey
+          asset_content_type: application/zip
+      - name: Upload Release Asset - node_runtime.compact.wasm
+        id: upload-wasm-runtime
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_avn_release.outputs.upload_url }}
+          asset_path: binaries/node_runtime.compact.wasm
+          asset_name: node_runtime.compact.wasm
+          asset_content_type: application/zip
+
+  release-docker-image:
+    runs-on: ubuntu-20.04
+    needs: [run-tests, release-build]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - name: get avn-node artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: avn-node
+          path: binaries/
+      - name: get subkey artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: subkey
+          path: binaries/
+      - name: get wasm runtime artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node_runtime.compact.wasm
+          path: binaries/wbuild/node-runtime/
+      - name: Set 'x' rights
+        run: chmod a+x binaries/*
+      - name: Build the avn-node & subkey docker images
+        run: |
+          docker build -f docker/Dockerfile binaries/ --tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${GITHUB_SHA::8}
+          docker build -f docker/subkey.Dockerfile binaries --tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey:${GITHUB_SHA::8}
+      - name: Build latest tag (only on master)
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${GITHUB_SHA::8} 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:latest
+          docker tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey:${GITHUB_SHA::8} 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey:latest
+      - name: Build docker tag, using git tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          docker tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${GITHUB_SHA::8} 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2:${GITHUB_REF##*/}
+          docker tag 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey:${GITHUB_SHA::8} 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey:${GITHUB_REF##*/}
+      - name: Configure AWS credentials from TestNet
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.TESTNET_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.TESTNET_AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+      - name: Login to the AWS registry
+        run: |
+          aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 189013141504.dkr.ecr.eu-west-2.amazonaws.com
+      - name: Push the images to the registry
+        run: |
+          docker push -a 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-tier2
+          docker push -a 189013141504.dkr.ecr.eu-west-2.amazonaws.com/avn/avn-subkey
+
+  cleanup:
+    runs-on: ubuntu-20.04
+    needs: [release, release-docker-image]
+    if: always()
+    steps:
+      - uses: geekyeggo/delete-artifact@v1
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          name: |
+            avn-node
+            subkey
+            node_runtime.compact.wasm
+          failOnError: false

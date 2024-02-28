@@ -1,0 +1,9 @@
+{
+	"base_path": "/tmp/",
+	"chain": "local",
+	"port": "30333",
+	"ws_port": "9944",
+	"rpc_port": "9933",
+	"telemetry_url": "ws://telemetry.polkadot.io:1024",
+	"grafana_port": "9955"
+}
